@@ -1,12 +1,11 @@
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
+import sys
+import site
 
-"""
-About: Simple video streaming client.
-"""
+# Add the site-packages directory to the system path
+site.addsitedir('/path/to/your/python/site-packages')
 
-import socket
 import cv2
+import socket
 import numpy as np
 
 SERVICE_IP = "10.0.0.12"
