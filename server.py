@@ -17,7 +17,7 @@ INTERNAL_IP_H3 = "192.168.0.13"
 INTERNAL_PORT = 9999
 SERVICE_IP = "10.0.0.12"
 SERVICE_PORT = 8888
-VIDEO_FILE = 'xxx.mpa'
+VIDEO_FILE = 'soap_bubble_1080p_10mb.mp4'
 
 def recv_state(host_name):
     if host_name == "h2":
