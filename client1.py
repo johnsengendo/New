@@ -5,7 +5,7 @@
 About: Simple video streaming client.
 """
 
-import ocket
+import socket
 import time
 
 SERVICE_IP = "10.0.0.12"
