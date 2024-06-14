@@ -1,12 +1,11 @@
-import sys
-import site
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-# Add the site-packages directory to the system path
-site.addsitedir('/path/to/your/python/site-packages')
+"""
+About: Simple video streaming client.
+"""
 
-import cv2
 import socket
-import numpy as np
 
 SERVICE_IP = "10.0.0.12"
 SERVICE_PORT = 8888
@@ -20,13 +19,7 @@ if __name__ == "__main__":
     while True:
         sock.sendto(data, (SERVICE_IP, SERVICE_PORT))
         buffer, _ = sock.recvfrom(65535)
-        np_data = np.frombuffer(buffer, dtype=np.uint8)
-        frame = cv2.imdecode(np_data, cv2.IMREAD_COLOR)
-
-        if frame is not None:
-            cv2.imshow('Streaming Video', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-
-    cv2.destroyAllWindows()
-    sock.close()
+        if buffer:
+            print("Receiving video stream data...")
+        else:
+            break

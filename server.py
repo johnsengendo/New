@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -9,7 +9,6 @@ import argparse
 import signal
 import socket
 import os
-import cv2
 import time
 
 INTERNAL_IP_H2 = "192.168.0.12"
@@ -31,15 +30,14 @@ def recv_state(host_name):
     state = int(state.decode("utf-8"))
     return state
 
-def stream_video(sock, addr, cap):
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-        _, buffer = cv2.imencode('.jpg', frame)
-        sock.sendto(buffer.tobytes(), addr)
-        # Simulate a delay to mimic real-time streaming
-        time.sleep(0.04)  # 25 frames per second
+def stream_video(sock, addr, video_path):
+    with open(video_path, 'rb') as f:
+        while True:
+            data = f.read(1024)
+            if not data:
+                break
+            sock.sendto(data, addr)
+            time.sleep(0.04)  # simulate streaming
 
 def run(host_name, get_state=False):
     counter = 0
@@ -63,15 +61,10 @@ def run(host_name, get_state=False):
     sock.bind((SERVICE_IP, SERVICE_PORT))
 
     video_path = os.path.join(os.path.dirname(__file__), VIDEO_FILE)
-    cap = cv2.VideoCapture(video_path)
-    if not cap.isOpened():
-        print(f"Error: Could not open video file {video_path}")
-        return
 
     while True:
         _, addr = sock.recvfrom(1024)
-        stream_video(sock, addr, cap)
-        cap.release()
+        stream_video(sock, addr, video_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Simple video streaming server.")
