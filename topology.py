@@ -15,7 +15,7 @@ from comnetsemu.cli import CLI
 from comnetsemu.net import Containernet, VNFManager
 from mininet.link import TCLink
 from mininet.log import info, setLogLevel
-from mininet.node import Controller
+from mininet.node import ontroller
 
 
 def get_ofport(ifce: str):
