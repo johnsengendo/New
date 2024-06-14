@@ -131,7 +131,7 @@ if __name__ == "__main__":
     time.sleep(3)
     info("*** Deploy client app on h1.\n")
     client_app = mgr.addContainer(
-        "client", "h1", "service_migration", "python /home/client1.py"
+        "client", "h1", "service_migration", "python /home/client.py"
     )
     time.sleep(10)
     client_log = client_app.getLogs()
